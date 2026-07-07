@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: "Foundry — AI Execution Platform",
   description:
     "Foundry is an AI execution platform where you create a mission and multiple specialist agents collaborate to produce deliverables.",
-  keywords: ["AI", "agents", "execution", "platform", "BTL Runtime"],
+  keywords: ["AI", "agents", "execution", "platform", "Foundry", "BTL Runtime"],
 };
 
 export default function RootLayout({

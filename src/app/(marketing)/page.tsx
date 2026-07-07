@@ -247,6 +247,114 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ─── BTL Runtime Hackathon Section ────────────────────────────── */}
+        <section className="px-6 pb-28 max-w-5xl mx-auto">
+          <div className="rounded-3xl border border-neutral-200/80 bg-white p-8 md:p-12 shadow-xs text-left relative overflow-hidden">
+            {/* Soft pink highlight glow specifically for BTL showcase badge */}
+            <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-pink-100/30 blur-3xl pointer-events-none" />
+
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-pink-200 bg-pink-50/60 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-pink-600 mb-4 shadow-2xs">
+                ⚡ BTL Runtime Hackathon 2026
+              </span>
+              <h2 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900 leading-tight">
+                Engineered for Shared-Savings Efficiency
+              </h2>
+              <p className="mt-4 text-xs text-neutral-500 leading-relaxed font-sans">
+                Foundry executes multi-agent loops natively on BTL Runtime. By leveraging semantic similarity caches, in-flight deduplication, and prompt-prefix matching, it slices agent reasoning expenses. Since BTL splits optimization savings 50/50, your workflow costs are cut in half.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 mt-10 items-start">
+              {/* Mechanisms checklist */}
+              <div className="space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-400">Optimization Mechanisms</h3>
+                
+                <div className="flex gap-3 items-start">
+                  <div className="h-5 w-5 shrink-0 rounded-full bg-neutral-100 flex items-center justify-center text-[10px]">1</div>
+                  <div>
+                    <h4 className="text-xs font-bold text-neutral-800">Exact-Response Caching</h4>
+                    <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed">Instantly returns cached results for identical prompt calls, billing $0.00 for repeat steps.</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 items-start">
+                  <div className="h-5 w-5 shrink-0 rounded-full bg-neutral-100 flex items-center justify-center text-[10px]">2</div>
+                  <div>
+                    <h4 className="text-xs font-bold text-neutral-800">Semantic Cosine Caching</h4>
+                    <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed">Embeds queries to match semantically equivalent instructions at a 0.92 cosine similarity threshold.</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 items-start">
+                  <div className="h-5 w-5 shrink-0 rounded-full bg-neutral-100 flex items-center justify-center text-[10px]">3</div>
+                  <div>
+                    <h4 className="text-xs font-bold text-neutral-800">In-Flight Deduplication</h4>
+                    <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed">Groups duplicate agent queries arriving mid-flight, fanning out a single response to conserve billing limits.</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 items-start">
+                  <div className="h-5 w-5 shrink-0 rounded-full bg-neutral-100 flex items-center justify-center text-[10px]">4</div>
+                  <div>
+                    <h4 className="text-xs font-bold text-neutral-800">Prompt-Prefix Matching</h4>
+                    <p className="text-[11px] text-neutral-500 mt-0.5 leading-relaxed">Matches system prompts and agent tool schemas to utilize provider-side prompt caching features.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Shared Savings Table */}
+              <div className="rounded-2xl border border-neutral-200/80 bg-neutral-50/50 p-5 space-y-4">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-400">Shared Savings Ledger</h3>
+                
+                <div className="overflow-x-auto">
+                  <table className="w-full border-collapse text-left text-[11px] font-sans">
+                    <thead>
+                      <tr className="border-b border-neutral-200 text-neutral-400 font-semibold uppercase tracking-wider">
+                        <th className="pb-2">Outcome</th>
+                        <th className="pb-2 text-right">Bench</th>
+                        <th className="pb-2 text-right">You Pay</th>
+                        <th className="pb-2 text-right text-emerald-600">Saved</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-neutral-200/60 text-neutral-700 font-medium">
+                      <tr>
+                        <td className="py-2 font-bold">Exact Cache Hit</td>
+                        <td className="py-2 text-right text-neutral-400">$1.00</td>
+                        <td className="py-2 text-right">$0.50</td>
+                        <td className="py-2 text-right text-emerald-600">50%</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-bold">Semantic Cache Match</td>
+                        <td className="py-2 text-right text-neutral-400">$1.00</td>
+                        <td className="py-2 text-right">$0.50</td>
+                        <td className="py-2 text-right text-emerald-600">50%</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-bold">Cheaper Route Found</td>
+                        <td className="py-2 text-right text-neutral-400">$1.00</td>
+                        <td className="py-2 text-right">~$0.70</td>
+                        <td className="py-2 text-right text-emerald-600">30%</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 font-bold">No Optimization Possible</td>
+                        <td className="py-2 text-right text-neutral-400">$1.00</td>
+                        <td className="py-2 text-right">$1.00</td>
+                        <td className="py-2 text-right text-neutral-400">0%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="bg-white border border-neutral-200/80 rounded-xl p-3 text-[10px] text-neutral-400 leading-relaxed font-mono flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-pink-500 animate-pulse shrink-0" />
+                  <span>Spot Prize Entry: Best Use of the BTL Runtime</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Banner Section */}
         <section className="px-6 pb-28 text-center max-w-5xl mx-auto">
           <div className="rounded-3xl border border-neutral-200/80 bg-linear-to-r from-neutral-50 via-white to-neutral-50 p-12 shadow-sm">
