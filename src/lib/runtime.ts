@@ -1,8 +1,8 @@
 import OpenAI from "openai";
 
 // Initialize OpenAI client pointed at BTL Runtime
-const baseURL = "https://api.badtheorylabs.com/v1";
-const apiKey = process.env.BTL_API_KEY || "placeholder";
+const baseURL = process.env.BTL_RUNTIME_BASE_URL || "https://api.badtheorylabs.com/v1";
+const apiKey = process.env.BTL_RUNTIME_API_KEY || process.env.BTL_API_KEY || "placeholder";
 
 export const btlClient = new OpenAI({
   apiKey,
