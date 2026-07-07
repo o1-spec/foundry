@@ -4,7 +4,7 @@ import { z } from "zod";
 export const AgentRoleSchema = z.object({
   name:  z.string().min(1, "Agent name is required"),
   role:  z.string().min(1, "Role is required"),
-  model: z.string().default("gpt-4o"),
+  model: z.string().default(process.env.BTL_STRONG_MODEL || "gpt-4o"),
 });
 
 // ─── Mission ────────────────────────────────────────────────────────

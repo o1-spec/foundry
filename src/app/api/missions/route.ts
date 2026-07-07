@@ -34,13 +34,13 @@ export async function POST(request: NextRequest) {
     const { title, description, type, constraints, expectedDeliverables, agents } = parsed.data;
 
     const DEFAULT_AGENTS = [
-      { name: "Planner Agent",    role: "Planner",         model: "gpt-4o" },
-      { name: "Research Agent",   role: "Researcher",      model: "gpt-4o" },
-      { name: "Product Agent",    role: "Product Manager", model: "gpt-4o" },
-      { name: "Architect Agent",  role: "Architect",       model: "gpt-4o" },
-      { name: "Engineer Agent",   role: "Engineer",        model: "gpt-4o" },
-      { name: "QA Agent",         role: "QA Specialist",   model: "gpt-4o" },
-      { name: "Reviewer Agent",   role: "Lead Reviewer",   model: "gpt-4o" },
+      { name: "Planner Agent",    role: "Planner",         model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "Research Agent",   role: "Researcher",      model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "Product Agent",    role: "Product Manager", model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "Architect Agent",  role: "Architect",       model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "Engineer Agent",   role: "Engineer",        model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "QA Agent",         role: "QA Specialist",   model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
+      { name: "Reviewer Agent",   role: "Lead Reviewer",   model: process.env.BTL_STRONG_MODEL || "gpt-4o" },
     ];
 
     const agentsToCreate = agents && agents.length > 0 ? agents : DEFAULT_AGENTS;

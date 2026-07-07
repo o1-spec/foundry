@@ -61,7 +61,7 @@ export async function generateAgentResponse({
   task,
   systemPrompt,
   userPrompt,
-  model = "gpt-4o",
+  model = process.env.BTL_STRONG_MODEL || "gpt-4o",
 }: GenerateAgentResponseOptions): Promise<AgentResponse> {
   const finalSystemPrompt =
     systemPrompt ||
