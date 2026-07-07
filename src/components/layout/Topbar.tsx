@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, ChevronRight, User, Plus } from "lucide-react";
+import { Bell, ChevronRight, User, Plus, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,16 +25,26 @@ function buildBreadcrumbs(pathname: string): { label: string; href: string }[] {
   return crumbs;
 }
 
-export function Topbar() {
+export function Topbar({ onMenuClick }: { onMenuClick?: () => void }) {
   const pathname = usePathname();
   const crumbs = buildBreadcrumbs(pathname);
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-2 border-b border-(--color-border-subtle) bg-(--color-bg-surface) px-4">
+      {onMenuClick && (
+        <button
+          onClick={onMenuClick}
+          className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors shadow-xs md:hidden mr-1"
+          aria-label="Open menu"
+        >
+          <Menu className="h-4 w-4" />
+        </button>
+      )}
+
       {/* Breadcrumbs */}
-      <nav className="flex flex-1 items-center gap-1 text-xs text-(--color-text-muted)" aria-label="Breadcrumb">
+      <nav className="flex flex-1 items-center gap-1 text-xs text-(--color-text-muted) truncate" aria-label="Breadcrumb">
         {crumbs.map((crumb, i) => (
-          <span key={crumb.href} className="flex items-center gap-1">
+          <span key={crumb.href} className="flex items-center gap-1 truncate">
             {i > 0 && <ChevronRight className="h-3 w-3 opacity-40" />}
             <span
               className={
