@@ -121,7 +121,7 @@ function renderMessageContent(text: string) {
           elementContent = parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-bold text-neutral-950">{part}</strong> : part));
         }
         rendered.push(
-          <p key={idx} className="text-xs text-neutral-600 mb-1 leading-relaxed break-words">
+          <p key={idx} className="text-xs text-neutral-600 mb-1 leading-relaxed wrap-break-word">
             {elementContent}
           </p>
         );
