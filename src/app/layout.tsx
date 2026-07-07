@@ -22,10 +22,34 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Foundry — AI Execution Platform",
+  title: {
+    default: "Foundry — Collaborative AI Agent Pipeline Platform",
+    template: "%s | Foundry"
+  },
   description:
-    "Foundry is an AI execution platform where you create a mission and multiple specialist agents collaborate to produce deliverables.",
-  keywords: ["AI", "agents", "execution", "platform", "Foundry", "BTL Runtime"],
+    "Foundry is a premium collaborative AI agent runner built for sub-second cost optimization. Design objectives, configure specialist roles, and launch autonomous execution loops powered by the BTL Runtime.",
+  keywords: [
+    "AI Agent Runner", 
+    "Multi-Agent Pipelines", 
+    "BTL Runtime Integration", 
+    "Shared-Savings Billing", 
+    "Foundry AI", 
+    "Autonomous Task Execution"
+  ],
+  authors: [{ name: "Foundry Team" }],
+  openGraph: {
+    title: "Foundry — Collaborative AI Agent Platform",
+    description: "Design objectives, assemble specialist agents, and run optimized execution loops on BTL Runtime.",
+    url: "https://foundry-nu-amber.vercel.app",
+    siteName: "Foundry",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Foundry — Collaborative AI Agent Platform",
+    description: "Run autonomous multi-agent pipelines with native BTL cost-saving optimizations.",
+  }
 };
 
 export default function RootLayout({
