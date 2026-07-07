@@ -36,6 +36,102 @@ const typeConfig: Record<MessageType, {
   STATUS: { icon: Loader2, color: "text-(--color-primary)", label: "Status" },
 };
 
+function renderMessageContent(text: string) {
+  const lines = text.split("\n");
+  const rendered: React.ReactNode[] = [];
+  let currentCodeLines: string[] = [];
+  let inCodeBlock = false;
+
+  lines.forEach((line, idx) => {
+    if (line.trim().startsWith("```")) {
+      if (inCodeBlock) {
+        rendered.push(
+          <pre
+            key={`code-${idx}`}
+            className="font-mono bg-neutral-50 text-[10px] border border-neutral-200/60 rounded-lg p-2.5 my-2 overflow-x-auto text-amber-700 whitespace-pre leading-relaxed select-all"
+          >
+            {currentCodeLines.join("\n")}
+          </pre>
+        );
+        currentCodeLines = [];
+        inCodeBlock = false;
+      } else {
+        inCodeBlock = true;
+      }
+    } else if (inCodeBlock) {
+      currentCodeLines.push(line);
+    } else {
+      const cleanLine = line.trim();
+      if (cleanLine.startsWith("# ")) {
+        rendered.push(
+          <h1 key={idx} className="text-xs font-bold text-neutral-900 mt-3 mb-1.5 border-b border-neutral-100 pb-0.5 font-serif">
+            {cleanLine.slice(2)}
+          </h1>
+        );
+      } else if (cleanLine.startsWith("## ")) {
+        rendered.push(
+          <h2 key={idx} className="text-xs font-bold text-neutral-900 mt-2.5 mb-1 font-serif">
+            {cleanLine.slice(3)}
+          </h2>
+        );
+      } else if (cleanLine.startsWith("### ")) {
+        rendered.push(
+          <h3 key={idx} className="text-[11px] font-semibold text-neutral-800 mt-2 mb-0.5 font-serif">
+            {cleanLine.slice(4)}
+          </h3>
+        );
+      } else if (cleanLine.startsWith("#### ")) {
+        rendered.push(
+          <h4 key={idx} className="text-[10px] font-semibold text-neutral-800 mt-1.5 mb-0.5">
+            {cleanLine.slice(5)}
+          </h4>
+        );
+      } else if (cleanLine.startsWith("- ")) {
+        let elementContent: React.ReactNode = cleanLine.slice(2);
+        if (typeof elementContent === "string" && elementContent.includes("**")) {
+          const parts = elementContent.split("**");
+          elementContent = parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-bold text-neutral-950">{part}</strong> : part));
+        }
+        rendered.push(
+          <li key={idx} className="ml-4 list-disc text-xs text-neutral-600 mb-0.5 leading-relaxed">
+            {elementContent}
+          </li>
+        );
+      } else if (/^\d+\.\s/.test(cleanLine)) {
+        const match = cleanLine.match(/^(\d+\.\s)(.*)/);
+        const listPrefix = match ? match[1] : "";
+        let listText = match ? match[2] : cleanLine;
+        let elementContent: React.ReactNode = listText;
+        if (typeof elementContent === "string" && elementContent.includes("**")) {
+          const parts = elementContent.split("**");
+          elementContent = parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-bold text-neutral-950">{part}</strong> : part));
+        }
+        rendered.push(
+          <p key={idx} className="text-xs text-neutral-600 ml-4 mb-1 leading-relaxed">
+            <span className="font-semibold text-neutral-400 mr-1">{listPrefix}</span>
+            {elementContent}
+          </p>
+        );
+      } else if (cleanLine === "") {
+        rendered.push(<div key={idx} className="h-1.5" />);
+      } else {
+        let elementContent: React.ReactNode = line;
+        if (line.includes("**")) {
+          const parts = line.split("**");
+          elementContent = parts.map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-bold text-neutral-950">{part}</strong> : part));
+        }
+        rendered.push(
+          <p key={idx} className="text-xs text-neutral-600 mb-1 leading-relaxed break-words">
+            {elementContent}
+          </p>
+        );
+      }
+    }
+  });
+
+  return rendered;
+}
+
 export function AgentActivityFeed({
   missionId,
   initialMessages = [],
@@ -124,9 +220,9 @@ export function AgentActivityFeed({
                         {formatRelativeTime(msg.createdAt)}
                       </span>
                     </div>
-                    <p className="text-xs text-(--color-text-secondary) leading-relaxed whitespace-pre-wrap wrap-break-word">
-                      {msg.content}
-                    </p>
+                    <div className="text-xs text-(--color-text-secondary) leading-relaxed">
+                      {renderMessageContent(msg.content)}
+                    </div>
                   </div>
                 </div>
               );
