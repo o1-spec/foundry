@@ -1,0 +1,1 @@
+/Library/PostgreSQL/18/bin/postgres "-D" "/Users/macbook/atlas/db_data" "-p" "5439"

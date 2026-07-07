@@ -1,0 +1,196 @@
+// Foundry — Prisma Schema v2
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Models ──────────────────────────────────────────────────────────
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  avatarUrl String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  missions  Mission[]
+}
+
+model Mission {
+  id                   String        @id @default(cuid())
+  title                String
+  description          String        @db.Text
+  status               MissionStatus @default(PENDING)
+  progress             Int           @default(0) // 0–100
+  type                 String        @default("General Mission")
+  constraints          String?       @db.Text
+  expectedDeliverables String?       @db.Text
+  userId               String?
+  user                 User?         @relation(fields: [userId], references: [id])
+  approved             Boolean       @default(false) // whether user approved final deliverables package
+
+  tasks          MissionTask[]
+  agents         Agent[]
+  messages       AgentMessage[]
+  artifacts      Artifact[]
+  runtimeMetrics RuntimeMetric[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MissionTask {
+  id          String     @id @default(cuid())
+  missionId   String
+  mission     Mission    @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  agentId     String?
+  agent       Agent?     @relation(fields: [agentId], references: [id])
+  title       String
+  description String?    @db.Text
+  status      TaskStatus @default(PENDING)
+  priority    Int        @default(0) // lower = higher priority
+  dependsOn   String[]   // array of MissionTask IDs this task waits for
+  output      String?    @db.Text
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Agent {
+  id          String      @id @default(cuid())
+  missionId   String
+  mission     Mission     @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  name        String
+  role        String
+  model       String      @default("gpt-4o")
+  status      AgentStatus @default(IDLE)
+  currentTask String?     // human-readable description of what it's doing right now
+  errorMessage String? @db.Text // error message if agent failed
+
+  tasks          MissionTask[]
+  messages       AgentMessage[]
+  artifacts      Artifact[]
+  runtimeMetrics RuntimeMetric[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AgentMessage {
+  id        String           @id @default(cuid())
+  missionId String
+  mission   Mission          @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  agentId   String?
+  agent     Agent?           @relation(fields: [agentId], references: [id])
+  role      MessageRole      // SYSTEM | USER | ASSISTANT | TOOL
+  type      MessageType      // LOG | TOOL_CALL | TOOL_RESULT | COMPLETION | ERROR | STATUS
+  content   String           @db.Text
+  metadata  Json?            // tool name/args, token counts, etc.
+  createdAt DateTime         @default(now())
+}
+
+model Artifact {
+  id             String       @id @default(cuid())
+  missionId      String
+  mission        Mission      @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  createdByAgent String?
+  agent          Agent?       @relation(fields: [createdByAgent], references: [id])
+  title          String
+  type           ArtifactType
+  content        String       @db.Text
+  mimeType       String       @default("text/plain")
+  sizeBytes      Int          @default(0)
+  version        Int          @default(1)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model RuntimeMetric {
+  id                String   @id @default(cuid())
+  missionId         String
+  mission           Mission  @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  agentId           String?
+  agent             Agent?   @relation(fields: [agentId], references: [id])
+
+  // Provider & model identity
+  provider          String   @default("btl")
+  model             String
+
+  // Performance
+  latencyMs         Int      @default(0)
+  promptTokens      Int      @default(0)
+  completionTokens  Int      @default(0)
+  totalTokens       Int      @default(0)
+
+  // Cache
+  cacheHit          Boolean  @default(false)
+  semanticCacheHit  Boolean  @default(false)
+
+  // Cost
+  estimatedCost     Float    @default(0) // USD
+  estimatedSavings  Float    @default(0) // USD saved by cache
+
+  createdAt         DateTime @default(now())
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────
+
+enum MissionStatus {
+  PENDING
+  RUNNING
+  PAUSED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum TaskStatus {
+  PENDING
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+  SKIPPED
+}
+
+enum AgentStatus {
+  IDLE
+  THINKING
+  WORKING
+  WAITING
+  RUNNING
+  COMPLETED
+  FAILED
+  RETRYING
+  DONE
+  ERROR
+}
+
+enum MessageRole {
+  SYSTEM
+  USER
+  ASSISTANT
+  TOOL
+}
+
+enum MessageType {
+  LOG
+  TOOL_CALL
+  TOOL_RESULT
+  COMPLETION
+  ERROR
+  STATUS
+}
+
+enum ArtifactType {
+  DOCUMENT
+  CODE
+  ANALYSIS
+  REPORT
+  DIAGRAM
+  DATA
+}
