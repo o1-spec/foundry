@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, ChevronRight, User } from "lucide-react";
+import { Bell, ChevronRight, User, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -38,7 +39,7 @@ export function Topbar() {
             <span
               className={
                 i === crumbs.length - 1
-                  ? "text-(--color-text-primary) font-medium"
+                  ? "text-(--color-text-primary) font-semibold"
                   : "hover:text-(--color-text-primary) transition-colors"
               }
             >
@@ -49,18 +50,22 @@ export function Topbar() {
       </nav>
 
       {/* Actions */}
-      <div className="flex items-center gap-1">
-        <Button variant="ghost" size="icon-sm" aria-label="Notifications">
+      <div className="flex items-center gap-3">
+        <Link href="/missions/new">
+          <Button size="sm" className="bg-(--color-primary) text-white hover:bg-(--color-primary-hover) rounded-full text-xs font-semibold px-4 shadow-sm shadow-neutral-900/5">
+            <Plus className="mr-1.5 h-3.5 w-3.5" strokeWidth={2.5} /> New Mission
+          </Button>
+        </Link>
+
+        <button aria-label="Notifications" className="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors shadow-xs">
           <Bell className="h-3.5 w-3.5" />
-        </Button>
+        </button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon-sm" aria-label="User menu">
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-(--color-primary-muted) ring-1 ring-(--color-primary)/30">
-                <User className="h-3.5 w-3.5 text-(--color-primary)" />
-              </div>
-            </Button>
+            <button aria-label="User menu" className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 border border-neutral-200/50 hover:opacity-90 transition-opacity">
+              <User className="h-3.5 w-3.5 text-(--color-primary)" />
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Account</DropdownMenuLabel>

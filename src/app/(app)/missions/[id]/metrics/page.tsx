@@ -141,20 +141,20 @@ export default async function MetricsPage({ params }: MetricsPageProps) {
   const missPercentage = totalCalls > 0 ? (cacheMisses / totalCalls) * 100 : 0;
 
   return (
-    <div className="space-y-6 animate-fade-up">
+    <div className="space-y-6 animate-fade-up max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-xl font-bold text-(--color-text-primary)">Runtime Telemetry</h1>
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900">Runtime Telemetry</h1>
             {isDemoMode && <Badge variant="secondary">Demo Data</Badge>}
           </div>
-          <p className="mt-1 text-sm text-(--color-text-muted)">{mission.title}</p>
+          <p className="mt-1.5 text-xs text-neutral-500">{mission.title}</p>
         </div>
       </div>
 
       {isDemoMode && (
-        <div className="flex items-center gap-2.5 rounded-lg border border-info/20 bg-info/5 p-3.5 text-xs text-(--color-info) leading-relaxed">
+        <div className="flex items-center gap-2.5 rounded-2xl border border-blue-200 bg-blue-50/60 p-3.5 text-xs text-blue-600 leading-relaxed shadow-xs">
           <Info className="h-4 w-4 shrink-0" />
           <p>
             <strong>Operational Sandbox Sandbox:</strong> No live runtime calls have been run for this mission yet. Displaying simulated, pre-compiled EDB metrics telemetry details below.

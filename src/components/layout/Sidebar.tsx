@@ -55,8 +55,8 @@ export function Sidebar() {
                 active
                   ? "bg-(--color-primary-muted) text-(--color-primary-hover)"
                   : highlight
-                  ? "border border-dashed border-(--color-border-default) text-(--color-text-muted) hover:border-(--color-primary)/40 hover:text-(--color-text-primary)"
-                  : "text-(--color-text-muted) hover:bg-(--color-bg-elevated) hover:text-(--color-text-primary)"
+                    ? "border border-dashed border-(--color-border-default) text-(--color-text-muted) hover:border-(--color-primary)/40 hover:text-(--color-text-primary)"
+                    : "text-(--color-text-muted) hover:bg-(--color-bg-elevated) hover:text-(--color-text-primary)"
               )}
             >
               <Icon
@@ -75,7 +75,7 @@ export function Sidebar() {
       </nav>
 
       {/* Bottom */}
-      <div className="space-y-0.5 border-t border-(--color-border-subtle) p-2">
+      <div className="space-y-1.5 border-t border-(--color-border-subtle) p-3">
         {bottomItems.map(({ href, label, icon: Icon }) => (
           <Link
             key={href}
@@ -87,11 +87,22 @@ export function Sidebar() {
           </Link>
         ))}
 
-        {/* Status indicator */}
-        <div className="flex items-center gap-2 rounded-lg border border-(--color-border-subtle) px-3 py-2 mt-1">
-          <Activity className="h-3 w-3 text-(--color-success)" />
-          <span className="text-[10px] text-(--color-text-muted)">Runtime online</span>
-          <span className="ml-auto h-1.5 w-1.5 rounded-full bg-(--color-success)" />
+        {/* Runtime Status */}
+        <div className="flex items-center gap-2 rounded-lg border border-(--color-border-subtle) px-3 py-2 bg-bg-elevated/40">
+          <Activity className="h-3.5 w-3.5 text-(--color-success)" />
+          <span className="text-[10px] font-medium text-(--color-text-muted)">Runtime online</span>
+          <span className="ml-auto h-1.5 w-1.5 rounded-full bg-(--color-success) animate-pulse" />
+        </div>
+
+        {/* User profile at the bottom */}
+        <div className="flex items-center gap-2.5 rounded-xl border border-(--color-border-subtle) bg-white p-2.5 shadow-xs mt-2">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-[10px] font-bold text-neutral-600 border border-neutral-200/40">
+            OF
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-bold text-neutral-800 truncate leading-none">Oluwafemi</p>
+            <p className="text-[9px] font-medium text-neutral-400 mt-0.5 leading-none">Pro Plan Sandbox</p>
+          </div>
         </div>
       </div>
     </aside>

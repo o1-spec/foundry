@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,6 +14,13 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const playfair = Playfair_Display({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  display: "swap",
+  style: ["normal", "italic"],
+});
+
 export const metadata: Metadata = {
   title: "Foundry — AI Execution Platform",
   description:
@@ -25,7 +32,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable} h-full`}>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable} ${playfair.variable} h-full`}>
       <body className="h-full antialiased">{children}</body>
     </html>
   );

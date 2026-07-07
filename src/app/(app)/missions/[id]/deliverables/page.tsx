@@ -24,11 +24,11 @@ export default async function DeliverablesPage({ params }: DeliverablesPageProps
   });
 
   return (
-    <div className="space-y-6 animate-fade-up">
+    <div className="space-y-6 animate-fade-up max-w-6xl mx-auto">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-(--color-text-primary)">Artifact Console</h1>
-          <p className="mt-1 text-sm text-(--color-text-muted)">{mission.title}</p>
+          <h1 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900">Artifact Console</h1>
+          <p className="mt-1.5 text-xs text-neutral-500">{mission.title}</p>
         </div>
         <Badge variant="secondary">
           {artifacts.length} file{artifacts.length !== 1 ? "s" : ""} generated
@@ -36,8 +36,8 @@ export default async function DeliverablesPage({ params }: DeliverablesPageProps
       </div>
 
       {artifacts.length === 0 ? (
-        <div className="rounded-xl border border-(--color-border-default) bg-(--color-bg-surface) py-16 text-center">
-          <p className="text-xs text-(--color-text-muted)">
+        <div className="rounded-2xl border border-neutral-200 bg-white py-16 text-center shadow-xs">
+          <p className="text-xs text-neutral-500">
             Run the mission to generate output artifacts.
           </p>
         </div>

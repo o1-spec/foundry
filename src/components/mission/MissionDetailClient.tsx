@@ -219,12 +219,12 @@ export function MissionDetailClient({ mission: initialMission }: MissionDetailCl
   const canRun = mission.status === "PENDING" || mission.status === "FAILED";
 
   return (
-    <div className="flex h-full flex-col gap-6">
+    <div className="flex h-full flex-col gap-6 max-w-6xl mx-auto w-full">
       {/* ── Top Header Section ────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-1 flex-wrap">
-            <h1 className="text-xl font-bold text-(--color-text-primary) truncate">
+            <h1 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900 truncate">
               {mission.title}
             </h1>
             <Badge variant={cfg.variant}>{cfg.label}</Badge>
@@ -232,7 +232,7 @@ export function MissionDetailClient({ mission: initialMission }: MissionDetailCl
               <Badge variant="success">Package Approved</Badge>
             )}
           </div>
-          <p className="text-sm text-(--color-text-muted) leading-relaxed max-w-3xl">
+          <p className="text-xs text-neutral-500 leading-relaxed max-w-3xl">
             {mission.description}
           </p>
 

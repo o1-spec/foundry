@@ -33,12 +33,12 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
     .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
   return (
-    <div className="flex h-full flex-col animate-fade-up">
+    <div className="flex h-full flex-col animate-fade-up max-w-4xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-xl font-bold text-(--color-text-primary)">Agent Activity</h1>
-        <p className="mt-1 text-sm text-(--color-text-muted)">{mission.title}</p>
+        <h1 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900">Agent Activity</h1>
+        <p className="mt-1.5 text-xs text-neutral-500">{mission.title}</p>
       </div>
-      <div className="flex-1 rounded-xl border border-(--color-border-default) bg-(--color-bg-elevated) overflow-hidden">
+      <div className="flex-1 rounded-2xl border border-neutral-200 bg-white shadow-xs overflow-hidden">
         <AgentActivityFeed
           missionId={id}
           initialMessages={allMessages}

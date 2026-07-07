@@ -1,5 +1,7 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, Bot, Zap, BarChart3, GitBranch, Shield, Globe } from "lucide-react";
+import { ArrowRight, Bot, Zap, BarChart3, GitBranch, Shield, Globe, Compass, Code, Terminal, CheckCircle2, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -36,148 +38,227 @@ const features = [
   },
 ];
 
+interface StickerProps {
+  children: React.ReactNode;
+  className?: string;
+  rotation?: string;
+}
+
+function Sticker({ children, className = "", rotation = "rotate-0" }: StickerProps) {
+  return (
+    <div className={`absolute pointer-events-none select-none transition-all duration-300 hover:scale-105 ${className} ${rotation}`}>
+      <div className="relative border border-dashed border-neutral-300/80 p-2 bg-neutral-100/10 rounded-xl">
+        {/* Resize Handles */}
+        <span className="absolute -top-1 -left-1 w-1.5 h-1.5 border border-neutral-400 bg-white" />
+        <span className="absolute -top-1 -right-1 w-1.5 h-1.5 border border-neutral-400 bg-white" />
+        <span className="absolute -bottom-1 -left-1 w-1.5 h-1.5 border border-neutral-400 bg-white" />
+        <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border border-neutral-400 bg-white" />
+
+        {/* Actual Content Card */}
+        <div className="rounded-xl border border-neutral-200/80 bg-white p-3.5 shadow-md shadow-neutral-200/40 text-left min-w-[200px]">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   return (
-    <div className="relative min-h-dvh overflow-hidden bg-(--color-bg-base)">
-      {/* Gradient mesh background */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-(--color-primary) opacity-[0.08] blur-[120px]" />
-        <div className="absolute top-1/3 -left-40 h-[400px] w-[400px] rounded-full bg-indigo-800 opacity-[0.06] blur-[100px]" />
-        <div className="absolute top-1/4 -right-40 h-[400px] w-[400px] rounded-full bg-violet-900 opacity-[0.06] blur-[100px]" />
-        {/* Dot grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-      </div>
+    <div className="relative min-h-dvh overflow-hidden bg-linear-to-b from-bg-base via-[#FCFAF7] to-[#F5F2EC] text-neutral-900 font-sans">
+      {/* Subtle Dot Grid Background */}
+      <div
+        className="absolute inset-0 opacity-[0.4]"
+        style={{
+          backgroundImage: "radial-gradient(circle, #dfddd9 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
 
-      {/* Nav */}
-      <header className="relative z-10 flex items-center justify-between border-b border-(--color-border-subtle) px-8 py-4">
+      {/* Navigation Header */}
+      <header className="relative z-20 flex items-center justify-between border-b border-neutral-200/60 bg-white/60 backdrop-blur-md px-6 py-4">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-(--color-primary)">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-(--color-primary) shadow-sm shadow-pink-500/10">
             <Zap className="h-4 w-4 text-white" strokeWidth={2.5} />
           </div>
-          <span className="text-sm font-bold tracking-tight text-(--color-text-primary)">Foundry</span>
+          <span className="text-sm font-bold tracking-tight text-neutral-900">Foundry</span>
         </div>
         <div className="flex items-center gap-3">
           <Link href="/dashboard">
-            <Button variant="ghost" size="sm">Dashboard</Button>
+            <Button variant="ghost" size="sm" className="text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/50 rounded-full">
+              Dashboard
+            </Button>
           </Link>
           <Link href="/missions/new">
-            <Button size="sm">
+            <Button size="sm" className="bg-(--color-primary) text-white hover:bg-(--color-primary-hover) rounded-full text-xs px-4 shadow-sm shadow-pink-500/10">
               Start a mission <ArrowRight className="h-3.5 w-3.5" />
             </Button>
           </Link>
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Main Container */}
       <main className="relative z-10">
-        <section className="flex flex-col items-center px-6 pb-24 pt-28 text-center">
-          <Badge variant="secondary" className="mb-6">
-            <Zap className="h-2.5 w-2.5 text-(--color-primary)" />
+        {/* Hero Section */}
+        <section className="relative flex flex-col items-center px-6 pb-20 pt-24 text-center min-h-[580px] justify-center max-w-5xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-neutral-300/80 bg-white/80 px-3 py-1 text-xs text-neutral-700 font-medium mb-6 shadow-xs animate-fade-up">
+            <Zap className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
             Powered by BTL Runtime
-          </Badge>
+          </div>
 
-          <h1 className="max-w-3xl text-5xl font-extrabold leading-[1.1] tracking-tight text-(--color-text-primary) md:text-6xl lg:text-7xl">
-            <span className="block">AI agents that</span>
-            <span
-              className="block bg-linear-to-r from-indigo-400 via-violet-400 to-indigo-300 bg-clip-text text-transparent animate-gradient"
-            >
-              execute together
-            </span>
+          {/* Title */}
+          <h1 className="font-serif text-5xl font-semibold tracking-tight text-neutral-900 md:text-7xl leading-[1.08] max-w-3xl animate-fade-up">
+            Coordinate AI agent <br />
+            teams, <span className="italic font-normal font-serif">openly</span>.
           </h1>
 
-          <p className="mt-6 max-w-xl text-base text-(--color-text-secondary) leading-relaxed">
-            Foundry is an AI execution platform where you define a mission and a team of specialist agents collaborates to deliver real results — plans, documents, code, analyses.
+          {/* Pitch */}
+          <p className="mt-6 max-w-lg text-base text-neutral-500 leading-relaxed font-sans animate-fade-up">
+            Foundry is an open canvas for collaborative specialist agents. Define your objective, orchestrate execution graphs, and watch them deliver real results.
           </p>
 
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+          {/* Action Buttons */}
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row animate-fade-up z-20">
             <Link href="/missions/new">
-              <Button size="lg" className="min-w-[180px] shadow-xl shadow-(--color-primary)/20">
-                <Zap className="h-4 w-4" />
-                Run your first mission
+              <Button size="lg" className="min-w-[180px] bg-(--color-primary) text-white hover:bg-(--color-primary-hover) rounded-full shadow-lg shadow-pink-500/20">
+                <Zap className="h-4 w-4" /> Start a mission
               </Button>
             </Link>
             <Link href="/dashboard">
-              <Button variant="outline" size="lg" className="min-w-[160px]">
+              <Button variant="outline" size="lg" className="min-w-[160px] border-neutral-300 bg-white/80 hover:bg-neutral-50 text-neutral-900 rounded-full">
                 View dashboard <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>
 
-          {/* Terminal-style preview */}
-          <div className="glass mt-16 w-full max-w-2xl rounded-2xl p-px shadow-2xl shadow-black/50 animate-fade-up">
-            <div className="rounded-2xl bg-(--color-bg-surface) p-5">
-              <div className="mb-4 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <span className="h-3 w-3 rounded-full bg-(--color-error)/60" />
-                  <span className="h-3 w-3 rounded-full bg-warning/60" />
-                  <span className="h-3 w-3 rounded-full bg-(--color-success)/60" />
+          <p className="mt-4 text-xs text-neutral-400 animate-fade-up">
+            Zero setup required. Sandbox comes pre-loaded with mock operations.
+          </p>
+
+          {/* Floating Sticker Canvas Objects */}
+          <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
+            {/* Top Left: Planner Sticker */}
+            <Sticker className="top-12 left-8" rotation="-rotate-6">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="flex h-5 w-5 items-center justify-center rounded-md bg-violet-100 text-violet-600">
+                  <Compass className="h-3 w-3" />
                 </div>
-                <span className="ml-2 text-[10px] text-(--color-text-muted)">Mission: Competitive SaaS Pricing Analysis</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Planner Agent</span>
               </div>
-              <div className="space-y-2 font-mono text-xs">
-                {[
-                  { agent: "Researcher", status: "DONE", msg: "Gathered 14 competitor pricing pages" },
-                  { agent: "Analyst", status: "WORKING", msg: "Identifying pricing patterns…" },
-                  { agent: "Writer", status: "IDLE", msg: "Waiting for analyst output" },
-                  { agent: "Critic", status: "IDLE", msg: "Ready to review" },
-                ].map((row) => (
-                  <div key={row.agent} className="flex items-center gap-3 rounded-lg bg-(--color-bg-elevated) px-3 py-2">
-                    <span
-                      className={`h-2 w-2 shrink-0 rounded-full ${row.status === "DONE" ? "bg-(--color-success)" :
-                          row.status === "WORKING" ? "bg-(--color-primary) animate-pulse" :
-                            "bg-(--color-text-disabled)"
-                        }`}
-                    />
-                    <span className="w-20 shrink-0 text-(--color-primary)">{row.agent}</span>
-                    <span className="text-(--color-text-muted)">{row.msg}</span>
-                  </div>
-                ))}
+              <p className="text-[11px] font-semibold text-neutral-800">Generated 7 pipeline tasks</p>
+              <div className="mt-2 flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[9px] text-neutral-500">Status: Completed</span>
               </div>
-            </div>
+            </Sticker>
+
+            {/* Middle Left: Document preview sticker */}
+            <Sticker className="top-48 left-16" rotation="rotate-3">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <FileText className="h-3 w-3 text-neutral-400" />
+                <span className="text-[9px] font-mono text-neutral-400">PRD.md</span>
+              </div>
+              <p className="text-[10px] font-bold text-neutral-800 mb-1">Competitive pricing matrix</p>
+              <div className="space-y-1">
+                <div className="h-1 w-20 rounded bg-neutral-200" />
+                <div className="h-1 w-16 rounded bg-neutral-200" />
+                <div className="h-1 w-24 rounded bg-neutral-200" />
+              </div>
+            </Sticker>
+
+            {/* Bottom Left: Engineer / Code Sticker */}
+            <Sticker className="bottom-20 left-12" rotation="-rotate-3">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <Code className="h-3 w-3 text-amber-500" />
+                <span className="text-[9px] font-mono text-amber-600">server.ts</span>
+              </div>
+              <pre className="text-[9px] font-mono bg-neutral-50 p-1.5 border border-neutral-100 rounded text-neutral-600">
+                {`const client = new BTLClient({\n  apiKey: process.env.BTL\n});`}
+              </pre>
+            </Sticker>
+
+            {/* Top Right: Graph Connection Sticker */}
+            <Sticker className="top-10 right-8" rotation="rotate-6">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="flex h-5 w-5 items-center justify-center rounded-md bg-emerald-100 text-emerald-600">
+                  <CheckCircle2 className="h-3 w-3" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Critic Review</span>
+              </div>
+              <p className="text-[11px] font-semibold text-neutral-800">Final deliverables approved</p>
+              <div className="mt-2 flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[9px] text-neutral-500">100% complete</span>
+              </div>
+            </Sticker>
+
+            {/* Middle Right: Runtime Metric Sticker */}
+            <Sticker className="top-44 right-16" rotation="-rotate-6">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className="flex h-5 w-5 items-center justify-center rounded-md bg-blue-100 text-blue-600">
+                  <Zap className="h-3 w-3" />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Runtime Telemetry</span>
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between gap-4 text-[9px]">
+                  <span className="text-neutral-500">Cache Hits:</span>
+                  <span className="font-bold text-neutral-800">100%</span>
+                </div>
+                <div className="flex items-center justify-between gap-4 text-[9px]">
+                  <span className="text-neutral-500">Savings:</span>
+                  <span className="font-bold text-emerald-600">+$42.50</span>
+                </div>
+              </div>
+            </Sticker>
+
+            {/* Bottom Right: Execution node Sticker */}
+            <Sticker className="bottom-24 right-10" rotation="rotate-3">
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+                <span className="text-[10px] font-bold text-neutral-800">Analyst Agent</span>
+              </div>
+              <p className="text-[9px] text-neutral-400 leading-tight">Identifying SaaS pricing pattern discrepancies...</p>
+            </Sticker>
           </div>
         </section>
 
-        {/* Features */}
-        <section className="px-6 pb-28">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="mb-12 text-center text-2xl font-bold text-(--color-text-primary)">
-              Everything you need to run AI missions at scale
+        {/* Features Grid Section */}
+        <section className="px-6 pb-28 pt-8 max-w-5xl mx-auto">
+          <div className="border-t border-neutral-200/80 pt-16">
+            <h2 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900 text-center mb-12">
+              Everything you need to run AI agent pipelines
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {features.map(({ icon: Icon, title, description }) => (
                 <div
                   key={title}
-                  className="glass group rounded-xl p-5 transition-all duration-200 hover:border-(--color-border-strong) hover:bg-(--color-bg-elevated)"
+                  className="group rounded-2xl border border-neutral-200/80 bg-white/70 backdrop-blur-xs p-6 transition-all duration-200 hover:border-neutral-400/60 hover:bg-white"
                 >
-                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg bg-(--color-primary-muted) transition-colors group-hover:bg-(--color-primary)/20">
-                    <Icon className="h-4 w-4 text-(--color-primary)" />
+                  <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-100 transition-colors group-hover:bg-black group-hover:text-white">
+                    <Icon className="h-4 w-4 text-neutral-700 transition-colors group-hover:text-white" />
                   </div>
-                  <h3 className="mb-1.5 text-sm font-semibold text-(--color-text-primary)">{title}</h3>
-                  <p className="text-xs text-(--color-text-muted) leading-relaxed">{description}</p>
+                  <h3 className="mb-2 text-sm font-semibold text-neutral-900">{title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed">{description}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="px-6 pb-28 text-center">
-          <div className="mx-auto max-w-xl glass rounded-2xl p-10">
-            <h2 className="mb-3 text-2xl font-bold text-(--color-text-primary)">
+        {/* CTA Banner Section */}
+        <section className="px-6 pb-28 text-center max-w-5xl mx-auto">
+          <div className="rounded-3xl border border-neutral-200/80 bg-linear-to-r from-neutral-50 via-white to-neutral-50 p-12 shadow-sm">
+            <h2 className="font-serif text-3xl font-semibold tracking-tight text-neutral-900 mb-3">
               Ready to run your first mission?
             </h2>
-            <p className="mb-8 text-sm text-(--color-text-muted)">
-              Set up takes 60 seconds. Define your objective, pick your agents, and let Foundry do the rest.
+            <p className="mb-8 max-w-md mx-auto text-sm text-neutral-500">
+              Set up takes 60 seconds. Define your objective, pick your agents, and let Foundry handle the complexity.
             </p>
             <Link href="/missions/new">
-              <Button size="lg" className="shadow-xl shadow-(--color-primary)/20">
-                <Zap className="h-4 w-4" /> Get started free
+              <Button size="lg" className="bg-black text-white hover:bg-neutral-800 rounded-full shadow-lg shadow-neutral-900/10">
+                <Zap className="h-4 w-4" /> Start a mission now
               </Button>
             </Link>
           </div>
@@ -185,11 +266,11 @@ export default function LandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-(--color-border-subtle) px-8 py-6">
-        <div className="flex items-center justify-between text-[10px] text-(--color-text-muted)">
+      <footer className="relative z-10 border-t border-neutral-200/60 bg-white/30 px-8 py-6">
+        <div className="flex items-center justify-between text-[10px] text-neutral-400">
           <div className="flex items-center gap-2">
-            <Zap className="h-3 w-3 text-(--color-primary)" />
-            <span className="font-semibold text-(--color-text-secondary)">Foundry</span>
+            <Zap className="h-3.5 w-3.5 text-neutral-700" />
+            <span className="font-semibold text-neutral-700">Foundry</span>
           </div>
           <p>AI execution platform — built on BTL Runtime</p>
         </div>

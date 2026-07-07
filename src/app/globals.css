@@ -4,47 +4,48 @@
 @theme inline {
   /* Fonts */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), Georgia, ui-serif, serif;
   --font-mono: var(--font-geist-mono), "JetBrains Mono", ui-monospace, monospace;
 
   /* Background scale */
-  --color-bg-base:    #09090b;
-  --color-bg-surface: #111113;
-  --color-bg-elevated:#18181b;
-  --color-bg-overlay: #1c1c1f;
+  --color-bg-base:    #FAF8F5;
+  --color-bg-surface: #ffffff;
+  --color-bg-elevated:#fdfcfb;
+  --color-bg-overlay: #f5f2ec;
 
   /* Border */
-  --color-border-subtle:  rgba(255,255,255,0.06);
-  --color-border-default: rgba(255,255,255,0.10);
-  --color-border-strong:  rgba(255,255,255,0.18);
+  --color-border-subtle:  rgba(0,0,0,0.05);
+  --color-border-default: rgba(0,0,0,0.09);
+  --color-border-strong:  rgba(0,0,0,0.15);
 
-  /* Primary — indigo */
-  --color-primary:       #6366f1;
-  --color-primary-hover: #818cf8;
-  --color-primary-muted: rgba(99,102,241,0.15);
+  /* Primary — Charcoal Black */
+  --color-primary:       #1c1917;
+  --color-primary-hover: #44403c;
+  --color-primary-muted: rgba(28,25,23,0.06);
 
   /* Text */
-  --color-text-primary: #fafafa;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted:   #71717a;
-  --color-text-disabled:#3f3f46;
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted:   #8c8a82;
+  --color-text-disabled:#b5b4ad;
 
   /* Status */
-  --color-success: #22c55e;
+  --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error:   #ef4444;
-  --color-info:    #38bdf8;
+  --color-info:    #a78bfa;
 
   /* Agent status colours */
-  --color-agent-idle:     #52525b;
+  --color-agent-idle:     #8c8a82;
   --color-agent-thinking: #a78bfa;
-  --color-agent-working:  #6366f1;
-  --color-agent-done:     #22c55e;
+  --color-agent-working:  #a78bfa;
+  --color-agent-done:     #10b981;
   --color-agent-error:    #ef4444;
 }
 
 /* ─── Base reset ───────────────────────────────────────────────────── */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 *, *::before, *::after {
@@ -72,7 +73,7 @@ body {
 
 /* ─── Utility: glass card ──────────────────────────────────────────── */
 .glass {
-  background: rgba(24,24,27,0.7);
+  background: rgba(255,255,255,0.75);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid var(--color-border-default);
