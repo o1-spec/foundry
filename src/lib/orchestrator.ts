@@ -389,15 +389,18 @@ export async function executeMissionPipeline(
     await runStage({ mission, agent: architectAgent, stage: architectDef, onMessage });
   }
 
-  // Stage 5: Engineer runs after Architect
-  if (engineerAgent) {
-    await runStage({ mission, agent: engineerAgent, stage: engineerDef, onMessage });
+  // Stage 5 & 6: Engineer and QA run in parallel after Architect
+  if (engineerAgent || qaAgent) {
+    const promises: Promise<any>[] = [];
+    if (engineerAgent) {
+      promises.push(runStage({ mission, agent: engineerAgent, stage: engineerDef, onMessage }));
+    }
+    if (qaAgent) {
+      promises.push(runStage({ mission, agent: qaAgent, stage: qaDef, onMessage }));
+    }
+    await Promise.all(promises);
   }
 
-  // Stage 6: QA runs after Engineer
-  if (qaAgent) {
-    await runStage({ mission, agent: qaAgent, stage: qaDef, onMessage });
-  }
 
   // Stage 7: Reviewer runs last
   if (reviewerAgent) {
