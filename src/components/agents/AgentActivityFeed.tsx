@@ -140,6 +140,12 @@ export function AgentActivityFeed({
   const [messages, setMessages] = useState<AgentMsg[]>(initialMessages);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // Sync messages with parent updates (e.g. from polling fallback)
+  useEffect(() => {
+    setMessages(initialMessages);
+  }, [initialMessages]);
+
+
   useEffect(() => {
     if (!isRunning) return;
 

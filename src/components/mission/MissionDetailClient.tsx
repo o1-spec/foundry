@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   Play,
@@ -79,6 +79,36 @@ export function MissionDetailClient({ mission: initialMission }: MissionDetailCl
   const [revisingAgentId, setRevisingAgentId] = useState<string | null>(null);
   const [activeRevisionId, setActiveRevisionId] = useState<string | null>(null);
   const [revisionPrompts, setRevisionPrompts] = useState<Record<string, string>>({});
+
+  // Poll mission status and updates every 3 seconds if running
+  useEffect(() => {
+    const shouldPoll = isRunning || mission.status === "RUNNING";
+    if (!shouldPoll) return;
+
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/missions/${mission.id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setMission(data);
+          
+          // If status transitions to terminal, clear polling
+          if (
+            data.status === "COMPLETED" ||
+            data.status === "FAILED" ||
+            data.status === "CANCELLED"
+          ) {
+            setIsRunning(false);
+            clearInterval(interval);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to poll mission updates:", error);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [mission.id, mission.status, isRunning]);
 
   async function handleRetryAgent(agentId: string) {
     setRetryingAgentId(agentId);
@@ -189,29 +219,16 @@ export function MissionDetailClient({ mission: initialMission }: MissionDetailCl
     setIsRunning(true);
     try {
       const res = await fetch(`/api/missions/${mission.id}/run`, { method: "POST" });
-      if (!res.body) return;
-
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const text = decoder.decode(value);
-        for (const line of text.split("\n")) {
-          if (line.startsWith("data:")) {
-            try {
-              const data = JSON.parse(line.slice(5).trim());
-              if (data.missionId) {
-                startTransition(() => router.refresh());
-              }
-            } catch {}
-          }
-        }
+      if (res.ok) {
+        startTransition(() => {
+          router.refresh();
+        });
+      } else {
+        setIsRunning(false);
       }
-    } finally {
+    } catch (error) {
+      console.error("Failed to start mission run:", error);
       setIsRunning(false);
-      startTransition(() => router.refresh());
     }
   }
 
